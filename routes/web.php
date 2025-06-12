@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Typesense\Client;
 
-Route::get('/', function () {
+Route::get('/create-collection', function () {
     $client = new Client([
         'api_key' => config('services.typesense.api_key'),
         'nodes' => [
@@ -28,10 +28,26 @@ Route::get('/', function () {
         'default_sorting_field' => 'ratings_count',
     ];
 
-    // $client->collections->create($bookSchema);
+    $client->collections->create($bookSchema);
 
     // Health check
     // curl "typesense:8108/collections/books" -H "X-TYPESENSE-API-KEY: xyz";
+
+    return 'Collection created';
+});
+
+Route::get('/import-collection', function () {
+    $client = new Client([
+        'api_key' => config('services.typesense.api_key'),
+        'nodes' => [
+            [
+                'host' => config('services.typesense.host'),
+                'port' => config('services.typesense.port'),
+                'protocol' => config('services.typesense.protocol'),
+            ],
+        ],
+        'connection_timeout_seconds' => 2,
+    ]);
 
     $books = file_get_contents(base_path('books.jsonl'));
     $client->collections['books']->documents->import($books);
