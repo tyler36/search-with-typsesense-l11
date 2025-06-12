@@ -69,7 +69,7 @@ Route::get('/search-collection', function () {
     ]);
 
     $results = $client->collections['books']->documents->search([
-        'q' => 'dark',
+        'q' => request('q'),
         'query_by' => 'title',
     ]);
 
