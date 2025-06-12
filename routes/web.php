@@ -20,7 +20,7 @@ Route::get('/create-collection', function () {
         'name' => 'books',
         'fields' => [
             ['name' => 'title', 'type' => 'string'],
-            ['name' => 'author', 'type' => 'string[]'],
+            ['name' => 'authors', 'type' => 'string[]'],
             ['name' => 'publication_year', 'type' => 'int32'],
             ['name' => 'ratings_count', 'type' => 'int32'],
             ['name' => 'average_rating', 'type' => 'float'],
@@ -50,7 +50,10 @@ Route::get('/import-collection', function () {
     ]);
 
     $books = file_get_contents(base_path('books.jsonl'));
-    $client->collections['books']->documents->import($books);
+    $response = $client->collections['books']->documents->import($books);
+
+    return 'Book imported';
+});
 
     return 'Book imported';
 });
