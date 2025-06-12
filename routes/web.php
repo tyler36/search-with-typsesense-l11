@@ -71,6 +71,7 @@ Route::get('/search-collection', function () {
     $results = $client->collections['books']->documents->search([
         'q' => request('q'),
         'query_by' => 'title,authors',
+        'sort_by' => '_text_match:desc',  // use ':asc' for ascending
     ]);
 
     $titles = collect($results['hits'])->map(fn($hit) => $hit['document']['title']);
