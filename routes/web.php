@@ -70,10 +70,11 @@ Route::get('/search-collection', function () {
 
     $results = $client->collections['books']->documents->search([
         'q' => request('q'),
-        'query_by' => 'title,authors',
-        'sort_by' => '_text_match:desc',  // use ':asc' for ascending
+        'query_by' => 'title',
+        'sort_by' => '_text_match:desc,publication_year:desc',  // use ':asc' for ascending
+        'per_page' => 15,
     ]);
 
-    $titles = collect($results['hits'])->map(fn($hit) => $hit['document']['title']);
+    $titles = collect($results['hits'])->map(fn ($hit) => $hit['document']['title']);
     dd($titles);
 });
