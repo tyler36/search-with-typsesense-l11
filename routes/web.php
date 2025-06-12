@@ -74,6 +74,4 @@ Route::get('/search-collection', function () {
     ]);
 
     dd($results);
-
-    return 'Book imported';
 });
