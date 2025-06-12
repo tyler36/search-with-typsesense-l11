@@ -1,0 +1,17 @@
+services:
+  typesense:
+    container_name: ddev-${DDEV_SITENAME}-typesense
+    image: typesense/typesense:28.0
+    # These labels ensure this service is discoverable by DDEV.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+      - "./typesense:/data"
+    environment:
+      - TYPESENSE_API_KEY=${TYPESENSE_API_KEY:-xyz}
+    ports:
+      - "${TYPESENSE_HTTPS_PORT:-8108}:8108"
+    command: '--data-dir /data --enable-cors'

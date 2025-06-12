@@ -12,4 +12,7 @@
   "php-cs-fixer.onsave": true,
   "php-cs-fixer.formatHtml": true,
   "php-cs-fixer.allowRisky": false,
+  "cSpell.words": [
+    "typesense"
+  ],
 }
