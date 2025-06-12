@@ -55,5 +55,25 @@ Route::get('/import-collection', function () {
     return 'Book imported';
 });
 
+Route::get('/search-collection', function () {
+    $client = new Client([
+        'api_key' => config('services.typesense.api_key'),
+        'nodes' => [
+            [
+                'host' => config('services.typesense.host'),
+                'port' => config('services.typesense.port'),
+                'protocol' => config('services.typesense.protocol'),
+            ],
+        ],
+        'connection_timeout_seconds' => 2,
+    ]);
+
+    $results = $client->collections['books']->documents->search([
+        'q' => 'dark',
+        'query_by' => 'title',
+    ]);
+
+    dd($results);
+
     return 'Book imported';
 });
