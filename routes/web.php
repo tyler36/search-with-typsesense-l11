@@ -28,10 +28,13 @@ Route::get('/', function () {
         'default_sorting_field' => 'ratings_count',
     ];
 
-    $client->collections->create($bookSchema);
+    // $client->collections->create($bookSchema);
 
     // Health check
     // curl "typesense:8108/collections/books" -H "X-TYPESENSE-API-KEY: xyz";
 
-    return 'Done';
+    $books = file_get_contents(base_path('books.jsonl'));
+    $client->collections['books']->documents->import($books);
+
+    return 'Book imported';
 });
