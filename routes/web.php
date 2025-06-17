@@ -3,19 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Typesense\Client;
 
-Route::get('/create-collection', function () {
-    $client = new Client([
-        'api_key' => config('services.typesense.api_key'),
-        'nodes' => [
-            [
-                'host' => config('services.typesense.host'),
-                'port' => config('services.typesense.port'),
-                'protocol' => config('services.typesense.protocol'),
-            ],
-        ],
-        'connection_timeout_seconds' => 2,
-    ]);
-
+Route::get('/create-collection', function (Client $client) {
     $bookSchema = [
         'name' => 'books',
         'fields' => [
@@ -36,38 +24,14 @@ Route::get('/create-collection', function () {
     return 'Collection created';
 });
 
-Route::get('/import-collection', function () {
-    $client = new Client([
-        'api_key' => config('services.typesense.api_key'),
-        'nodes' => [
-            [
-                'host' => config('services.typesense.host'),
-                'port' => config('services.typesense.port'),
-                'protocol' => config('services.typesense.protocol'),
-            ],
-        ],
-        'connection_timeout_seconds' => 2,
-    ]);
-
+Route::get('/import-collection', function (Client $client) {
     $books = file_get_contents(base_path('books.jsonl'));
     $response = $client->collections['books']->documents->import($books);
 
     return 'Book imported';
 });
 
-Route::get('/search-collection', function () {
-    $client = new Client([
-        'api_key' => config('services.typesense.api_key'),
-        'nodes' => [
-            [
-                'host' => config('services.typesense.host'),
-                'port' => config('services.typesense.port'),
-                'protocol' => config('services.typesense.protocol'),
-            ],
-        ],
-        'connection_timeout_seconds' => 2,
-    ]);
-
+Route::get('/search-collection', function (Client $client) {
     $results = $client->collections['books']->documents->search([
         'q' => request('q'),
         'query_by' => 'title',
