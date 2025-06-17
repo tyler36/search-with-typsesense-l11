@@ -50,6 +50,13 @@ Route::get('/filter-search', function (Client $client) {
         'query_by' => 'title',
         'sort_by' => '_text_match:desc,publication_year:desc',  // use ':asc' for ascending
         'per_page' => 15,
-        'filter_by' => 'authors:=Blake Crouch'
+        // 'filter_by' => 'publication_year:2000',
+        // 'filter_by' => 'publication_year:[2000..2010]',
+        // 'filter_by' => 'authors:=Blake Crouch',
+        // 'filter_by' => 'authors:=Blake Crouch && publication_year:=2016'
+        // 'filter_by' => 'authors:=Blake Crouch || publication_year:=2000'
+        // 'filter_by' => 'publication_year:[1990..2000] || publication_year:[2010..2020]'
+        // 'filter_by' => 'publication_year:[1990..2000, 2010..2020]'
+        'filter_by' => 'publication_year:<1950',
     ]);
 });
