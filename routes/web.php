@@ -8,13 +8,15 @@ Route::get('/create-collection', function (Client $client) {
         'name' => 'books',
         'fields' => [
             ['name' => 'title', 'type' => 'string'],
-            ['name' => 'authors', 'type' => 'string[]'],
+            ['name' => 'authors', 'type' => 'string[]', 'facet' => true],
             ['name' => 'publication_year', 'type' => 'int32'],
             ['name' => 'ratings_count', 'type' => 'int32'],
             ['name' => 'average_rating', 'type' => 'float'],
         ],
         'default_sorting_field' => 'ratings_count',
     ];
+
+    $client->collections['books']->delete();
 
     $client->collections->create($bookSchema);
 
@@ -43,7 +45,6 @@ Route::get('/search-collection', function (Client $client) {
     dd($titles);
 });
 
-
 Route::get('/filter-search', function (Client $client) {
     return $client->collections['books']->documents->search([
         'q' => request('q'),
@@ -58,5 +59,15 @@ Route::get('/filter-search', function (Client $client) {
         // 'filter_by' => 'publication_year:[1990..2000] || publication_year:[2010..2020]'
         // 'filter_by' => 'publication_year:[1990..2000, 2010..2020]'
         'filter_by' => 'publication_year:<1950',
+    ]);
+});
+
+Route::get('/faceting', function (Client $client) {
+    return $client->collections['books']->documents->search([
+        'q' => request('q'),
+        'query_by' => 'title',
+        'sort_by' => '_text_match:desc,ratings_count:desc',
+        'per_page' => 50,
+        'facet_by' => 'authors'
     ]);
 });
