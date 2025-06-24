@@ -3,6 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use Typesense\Client;
 
+Route::get('/', function (Client $client) {
+    $query = request('q', '*');
+
+    $results = $client->collections['books']->documents->search([
+        'q' => $query,
+        'query_by' => 'title'
+    ]);
+
+    $results = collect($results['hits'])->pluck('document.title');
+
+    return view('search', [
+        'results' => $results,
+    ]);
+});
+
 Route::get('/create-collection', function (Client $client) {
     $bookSchema = [
         'name' => 'books',
