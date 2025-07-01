@@ -8,13 +8,21 @@ Route::get('/', function (Client $client) {
 
     $results = $client->collections['books']->documents->search([
         'q' => $query,
-        'query_by' => 'title'
+        'query_by' => 'title',
+        'facet_by' => 'authors',
     ]);
 
+    $facets = collect($results['facet_counts'])->map(function ($facet) {
+        return [
+            'name' => $facet['field_name'],
+            'filters' => $facet['counts'],
+        ];
+    });
     $results = collect($results['hits'])->pluck('highlights')->flatten(1)->pluck('snippet');
 
     return view('search', [
         'results' => $results,
+        'facets' => $facets,
     ]);
 });
 
