@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Typesense\Client;
 
-Route::get('/', function (Client $client) {
+Route::get('/search', function (Client $client) {
     $query = request('q', '*');
 
     $results = $client->collections['books']->documents->search([

@@ -24,7 +24,7 @@
     </aside>
 
     <div class="col-span-9">
-      <form action="/" method="GET">
+      <form action="/search" method="GET">
         <input class="border border-gray-300 border-b-0 w-full px-4 py-2" type="search" name="q" id="q" required
           value="{{ request('q') }}">
       </form>
