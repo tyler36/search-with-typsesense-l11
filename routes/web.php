@@ -6,11 +6,17 @@ use Typesense\Client;
 Route::get('/search', function (Client $client) {
     $query = request('q', '*');
 
-    $results = $client->collections['books']->documents->search([
+    $searchParams = [
         'q' => $query,
         'query_by' => 'title',
         'facet_by' => 'authors',
-    ]);
+    ];
+
+    if (request()->filled('author')) {
+        $searchParams['filter_by'] = 'authors:='. request('author');
+    }
+
+    $results = $client->collections['books']->documents->search($searchParams);
 
     $facets = collect($results['facet_counts'])->map(function ($facet) {
         return [

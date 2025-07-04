@@ -15,12 +15,14 @@
       <div class="border-gray-300 py-2 border">
       <h3 class="font-bold border-b border-gray-300 px-4 pb-2">{{ ucwords($facet['name']) }}</h3>
       <ul class="px-4 py-2">
-      @foreach ($facet['filters'] as $filter)
-      <li>{{ $filter['value'] }}</li>
+        @foreach ($facet['filters'] as $filter)
+      <li><a class="text-blue-500 hover:underline"
+        href="{{ url()->query('/search', array_merge(request()->query(), ['author' => $filter['value']])) }}">{{ $filter['value'] }}</a>
+      </li>
       @endforeach
       </ul>
       </div>
-  @endforeach
+    @endforeach
     </aside>
 
     <div class="col-span-9">
