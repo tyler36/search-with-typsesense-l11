@@ -11,18 +11,24 @@
 <body class="p-8">
   <div class="grid grid-cols-12 gap-10">
     <aside class="col-span-3">
-      @foreach ($facets as $facet)
-      <div class="border-gray-300 py-2 border">
-      <h3 class="font-bold border-b border-gray-300 px-4 pb-2">{{ ucwords($facet['name']) }}</h3>
-      <ul class="px-4 py-2">
-        @foreach ($facet['filters'] as $filter)
-      <li><a class="text-blue-500 hover:underline"
-        href="{{ url()->query('/search', array_merge(request()->query(), ['author' => $filter['value']])) }}">{{ $filter['value'] }}</a>
-      </li>
-      @endforeach
-      </ul>
-      </div>
+      <form action="/search" method="GET">
+        <input type="hidden" name="q" value="{{ request('q') }}">
+        @foreach ($facets as $facet)
+        <div class="border-gray-300 py-2 border">
+          <h3 class="font-bold border-b border-gray-300 px-4 pb-2">{{ ucwords($facet['name']) }}</h3>
+          <ul class="px-4 py-2">
+          @foreach ($facet['filters'] as $filter)
+          <li>
+          <label for="{{ $facet['name'] }}-{{ $filter['id'] }}" class="flex items-center gap-x-2">
+          <input type="checkbox" name="filters[{{ $facet['name'] }}][]" id="{{ $facet['name'] }}-{{ $filter['id'] }}"
+            onchange="this.form.submit()" value="{{ trim($filter['name']) }}" @checked(in_array($filter['name'], request('filters.authors', [])))> {{  $filter['name'] }}
+          </label>
+          </li>
+        @endforeach
+          </ul>
+        </div>
     @endforeach
+      </form>
     </aside>
 
     <div class="col-span-9">
