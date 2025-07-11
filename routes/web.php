@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Typesense\Client;
 
 Route::get('/search', function (Client $client) {
@@ -8,33 +9,14 @@ Route::get('/search', function (Client $client) {
     $searchParams = [
         'q' => $query,
         'query_by' => 'title',
-        'facet_by' => 'authors',
     ];
-
-    if (request()->filled('filters.authors')) {
-        $searchParams['filter_by'] = 'authors:['. implode(', ', request('filters.authors')) .']';
-    }
 
     $results = $client->collections['books']->documents->search($searchParams);
 
-    $facets = collect($results['facet_counts'])->map(function ($facet) {
-        return [
-            'name' => $facet['field_name'],
-            'filters' => collect($facet['counts'])->map(function ($filter) {
-                return [
-                    'count' => $filter['count'],
-                    'name' => $filter['value'],
-                    'id' => strtolower(str_replace([' ', "'"], ['-', ''], $filter['value'])),
-                ];
-            })->toArray(),
-        ];
-    });
-
     $results = collect($results['hits'])->pluck('highlights')->flatten(1)->pluck('snippet');
 
-    return view('search', [
+    return Inertia::render('Search/Index', [
         'results' => $results,
-        'facets' => $facets,
     ]);
 });
 
