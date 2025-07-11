@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 import { router } from "@inertiajs/vue3";
 
 let query = ref('');
+let timeout = null
 
 defineProps({
   results: {
@@ -12,11 +13,14 @@ defineProps({
 })
 
 watch(query, function(newQuery){
-  router.reload({
-    data: {
-      q: newQuery
-    }
-  })
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    router.reload({
+      data: {
+        q: newQuery
+      }
+    })
+  }, 400)
 })
 </script>
 
