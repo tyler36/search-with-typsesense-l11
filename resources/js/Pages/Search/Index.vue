@@ -1,40 +1,45 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { router } from "@inertiajs/vue3";
+import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
-let query = ref('');
-let timeout = null
-
-defineProps({
-  results: {
-    type: Array,
-    default: () => []
-  }
-})
-
-watch(query, function(newQuery){
-  clearTimeout(timeout)
-  timeout = setTimeout(() => {
-    router.reload({
-      data: {
-        q: newQuery
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: 8108,
+        protocol: "http"
       }
-    })
-  }, 400)
-})
+    ]
+  },
+
+  additionalSearchParameters: {
+    query_by: "title"
+  }
+});
+const searchClient = typesenseInstantsearchAdapter.searchClient;
+
+// const search = instantsearch({
+//   searchClient,
+//   indexName: "books"
+// });
+
 </script>
 
 <template>
   <div class="">
     <h1>Search</h1>
-    <input type="search" v-model="query">
-
-    <div v-if="results.length">
-      <h2>Results:</h2>
-      <ul>
-        <li v-for="result in results" :key="result.id" v-html="result" />
-      </ul>
-  </div>
+    <ais-instant-search :search-client="searchClient" index-name="books">
+      <ais-search-box/>
+      <ais-stats
+        :class-names="object"
+      />
+      <ais-hits>
+        <template #item="{ item }">
+          <ais-highlight attribute="title" :hit="item" />
+        </template>
+      </ais-hits>
+    </ais-instant-search>
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+import InstantSearch from "vue-instantsearch/vue3/es";
 
 createInertiaApp({
   resolve: name => {
@@ -9,6 +10,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
+      .use(InstantSearch)
       .mount(el)
   },
 })

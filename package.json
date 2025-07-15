@@ -15,6 +15,9 @@
         "vue": "^3.5.17"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^2.0.14"
+        "@inertiajs/vue3": "^2.0.14",
+        "algoliasearch": "^5.32.0",
+        "typesense-instantsearch-adapter": "^2.9.0",
+        "vue-instantsearch": "^4.21.1"
     }
 }
