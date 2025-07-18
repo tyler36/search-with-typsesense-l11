@@ -4,20 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Typesense\Client;
 
-Route::get('/search', function (Client $client) {
-    $query = request('q', '*');
-    $searchParams = [
-        'q' => $query,
-        'query_by' => 'title',
-    ];
-
-    $results = $client->collections['books']->documents->search($searchParams);
-
-    $results = collect($results['hits'])->pluck('highlights')->flatten(1)->pluck('snippet');
-
-    return Inertia::render('Search/Index', [
-        'results' => $results,
-    ]);
+Route::get('/search', function () {
+    return Inertia::render('Search/Index');
 });
 
 Route::get('/create-collection', function (Client $client) {
