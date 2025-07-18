@@ -17,7 +17,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     query_by: "title"
   }
 });
-const searchClient = typesenseInstantsearchAdapter.searchClient;
+const searchClient = adapter.searchClient;
 
 // const search = instantsearch({
 //   searchClient,
