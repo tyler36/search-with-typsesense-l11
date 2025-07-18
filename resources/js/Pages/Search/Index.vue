@@ -31,10 +31,20 @@ const searchClient = adapter.searchClient;
   <div class="max-w-5xl mx-auto">
     <ais-instant-search :search-client="searchClient" index-name="books" class="space-y-2">
       <div class="grid grid-cols-12 gap-8">
-        <aside class="col-span-3">
+        <aside class="col-span-3 space-y-4">
           <ais-panel>
             <template #header>Authors</template>
             <ais-refinement-list attribute="authors" />
+          </ais-panel>
+          <ais-panel>
+            <template #header>Publication Year</template>
+            <ais-numeric-menu attribute="publication_year" :items="[
+                { label: 'All' },
+                { label : '2000 - Now', start: 2000},
+                { label : '1980 - 1999', start: 1980, end: 1989},
+                { label : '1900 - 1979', start: 1900, end: 1979},
+                { label : 'Ancient', end: 1899},
+            ]"></ais-numeric-menu>
           </ais-panel>
         </aside>
         <div class="col-span-9">
