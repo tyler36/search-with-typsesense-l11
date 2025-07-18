@@ -1,7 +1,8 @@
 <script setup>
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
+import "instantsearch.css/themes/algolia-min.css";
 
-const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+const adapter = new TypesenseInstantSearchAdapter({
   server: {
     apiKey: "xyz",
     nodes: [
