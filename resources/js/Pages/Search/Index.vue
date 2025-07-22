@@ -50,7 +50,7 @@ const searchClient = adapter.searchClient;
         <div class="col-span-9">
           <ais-search-box/>
           <ais-stats
-            :class-names="object"
+            :class-names="object" class="my-4"
           />
           <ais-hits>
             <template #item="{ item }">
