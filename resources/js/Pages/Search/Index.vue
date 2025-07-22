@@ -15,9 +15,11 @@ const adapter = new TypesenseInstantSearchAdapter({
   },
 
   additionalSearchParameters: {
-    query_by: "title"
+    query_by: "title",
+    sort_by: "_text_match:desc,ratings_count:desc,publication_year:desc",
   }
 });
+
 const searchClient = adapter.searchClient;
 
 // const search = instantsearch({
@@ -48,7 +50,7 @@ const searchClient = adapter.searchClient;
           </ais-panel>
         </aside>
         <div class="col-span-full xl:col-span-9">
-          <ais-search-box/>
+          <ais-search-box v-model="searchQuery"/>
           <ais-stats
             :class-names="object" class="my-4"
           />
