@@ -31,7 +31,7 @@ const searchClient = adapter.searchClient;
   <div class="max-w-5xl mx-auto">
     <ais-instant-search :search-client="searchClient" index-name="books" class="space-y-2">
       <div class="grid grid-cols-12 gap-8">
-        <aside class="col-span-3 space-y-4">
+        <aside class="col-span-full xl:col-span-3 space-y-4">
           <ais-panel>
             <template #header>Authors</template>
             <ais-refinement-list attribute="authors" />
@@ -47,7 +47,7 @@ const searchClient = adapter.searchClient;
             ]"></ais-numeric-menu>
           </ais-panel>
         </aside>
-        <div class="col-span-9">
+        <div class="col-span-full xl:col-span-9">
           <ais-search-box/>
           <ais-stats
             :class-names="object" class="my-4"
