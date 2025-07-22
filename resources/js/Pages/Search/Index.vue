@@ -72,7 +72,8 @@ const searchClient = adapter.searchClient;
 </template>
 
 <style>
-.ais-RefinementList-label {
+.ais-RefinementList-label,
+.ais-NumericMenu-label{
   display: flex;
   gap: .5rem;
   padding: .1rem 0;
