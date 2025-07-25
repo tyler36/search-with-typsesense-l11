@@ -8,6 +8,27 @@ Route::get('/search', function () {
     return Inertia::render('Search/Index');
 });
 
+Route::get('/playground', function (Client $client) {
+    // Target a query for "Twilight" exactly
+    // bump the document with the ID of 8354
+    $override = [
+        'rule' => [
+            'query' => 'twilight',
+            'match' => 'exact',
+        ],
+        'includes' => [
+            ['id' => '8354', 'position' => 1]
+        ],
+    ];
+
+    $client->collections['books']->overrides->upsert('promote_twilight_sponsorship', $override);
+
+    // Uncomment the below line to remove the override.
+    // $client->collections['books']->overrides['promote_twilight_sponsorship']->delete();
+
+    return 'Override created';
+});
+
 Route::get('/create-collection', function (Client $client) {
     $bookSchema = [
         'name' => 'books',
