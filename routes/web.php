@@ -1,8 +1,13 @@
 <?php
 
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Typesense\Client;
+
+Route::get('/course', function () {
+    return Course::search('voluptatibus')->get();
+});
 
 Route::get('/search', function () {
     return Inertia::render('Search/Index');
