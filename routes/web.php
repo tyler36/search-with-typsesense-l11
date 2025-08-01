@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Typesense\Client;
 
-Route::get('/course', function () {
-    return Course::search('voluptatibus')->get();
+Route::get('/', function () {
+    return Course::search(request('q', '*'))
+        ->get();
 });
 
 Route::get('/search', function () {
