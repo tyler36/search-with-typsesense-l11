@@ -14,6 +14,11 @@ class Course extends Model
     /** @use Searchable */
     use Searchable;
 
+    public function shouldBeSearchable(): bool
+    {
+        return !$this->archived;
+    }
+
     public function toSearchableArray(): array
     {
         return [
@@ -22,6 +27,7 @@ class Course extends Model
             'description' => $this->description,
             'user_id' => $this->user_id,
             'category' => $this->category,
+            'archived' => (bool) $this->archived,
             'created_at' => $this->created_at->timestamp,
         ];
     }

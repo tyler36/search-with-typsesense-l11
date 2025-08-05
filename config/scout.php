@@ -208,6 +208,10 @@ return [
                             'facet' => true,
                         ],
                         [
+                            'name' => 'archived',
+                            'type' => 'bool',
+                        ],
+                        [
                             'name' => 'created_at',
                             'type' => 'int64',
                         ],
