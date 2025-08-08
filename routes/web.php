@@ -4,10 +4,16 @@ use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Typesense\Client;
+use Typesense\Documents;
 
 Route::get('/', function () {
-    return Course::search(request('q', '*'))
-        ->get();
+    return Course::search('omnis', function (Documents $typesense, string $query, array $options) {
+        $options['highlight_start_tag'] = '<span class="text-red-500">';
+        $options['highlight_end_tag'] = '</span>';
+
+        return $typesense->search( $options);
+    })
+        ->raw();
 });
 
 Route::get('/search', function () {
