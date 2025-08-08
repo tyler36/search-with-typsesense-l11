@@ -7,13 +7,12 @@ use Typesense\Client;
 use Typesense\Documents;
 
 Route::get('/', function () {
-    return Course::search('omnis', function (Documents $typesense, string $query, array $options) {
-        $options['highlight_start_tag'] = '<span class="text-red-500">';
-        $options['highlight_end_tag'] = '</span>';
-
-        return $typesense->search( $options);
-    })
-        ->raw();
+    return Course::search('omnis' )
+        ->options([
+            'filter_by' => 'category:Tooling',
+            // @see https://typesense.org/docs/29.0/api/search.html#search-parameters
+        ])
+        ->get();
 });
 
 Route::get('/search', function () {
