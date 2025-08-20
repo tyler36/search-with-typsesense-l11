@@ -7,12 +7,7 @@ use Typesense\Client;
 use Typesense\Documents;
 
 Route::get('/', function () {
-    return Course::search(request('q', '*') )
-        ->options([
-            'query_by' => 'embedding',
-            'exclude_fields' => 'embedding',
-        ])
-        ->raw();
+    return Inertia::render('Search/Index');
 });
 
 Route::get('/search', function () {
