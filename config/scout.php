@@ -199,6 +199,16 @@ return [
                             'type' => 'string',
                         ],
                         [
+                            'name' => 'embedding',
+                            'type' => 'float[]',
+                            'embed' => [
+                                'from' => ['name', 'description'],
+                                'model_config' => [
+                                    'model_name' => 'ts/all-MiniLM-L12-v2'
+                                ]
+                            ]
+                        ],
+                        [
                             'name' => 'user_id',
                             'type' => 'int32',
                         ],

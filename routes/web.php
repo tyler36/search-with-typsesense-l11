@@ -7,12 +7,11 @@ use Typesense\Client;
 use Typesense\Documents;
 
 Route::get('/', function () {
-    return Course::search('omnis' )
+    return Course::search(request('q', '*') )
         ->options([
-            'filter_by' => 'category:Tooling',
-            // @see https://typesense.org/docs/29.0/api/search.html#search-parameters
+            'query_by' => 'embedding',
         ])
-        ->get();
+        ->raw();
 });
 
 Route::get('/search', function () {
