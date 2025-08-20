@@ -202,7 +202,7 @@ return [
                             'name' => 'embedding',
                             'type' => 'float[]',
                             'embed' => [
-                                'from' => ['name', 'description'],
+                                'from' => ['name'],
                                 'model_config' => [
                                     'model_name' => 'ts/all-MiniLM-L12-v2'
                                 ]
