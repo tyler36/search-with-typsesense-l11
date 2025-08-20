@@ -4,12 +4,12 @@ import "instantsearch.css/themes/algolia-min.css";
 
 const adapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "xyz",
+    apiKey: import.meta.env.VITE_TYPESENSE_API_KEY,
     nodes: [
       {
-        host: "localhost",
-        port: 8108,
-        protocol: "http"
+        host: import.meta.env.VITE_TYPESENSE_HOST,
+        port: import.meta.env.VITE_TYPESENSE_PORT,
+        protocol: import.meta.env.VITE_TYPESENSE_PROTOCOL
       }
     ]
   },
